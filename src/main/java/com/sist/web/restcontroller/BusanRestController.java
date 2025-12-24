@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sist.web.service.BusanService;
 import com.sist.web.vo.BusanVO;
+import com.sist.web.vo.FoodVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -47,6 +48,23 @@ public class BusanRestController {
 			map.put("startPage", startPage);
 			map.put("endPage", endPage);
 			map.put("type", type);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(map, HttpStatus.OK);
+	}
+	
+	@GetMapping("detail_vue")
+	public ResponseEntity<Map<String, Object>> busan_detail(@RequestParam("no") int no) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			BusanVO vo = bService.busanDetailData(no);
+			map.put("vo", vo);
+			String[] datas = vo.getAddress().split(" ");
+			// 주변 맛집
+			List<FoodVO> list = bService.foodNearData4(datas[1]);
+			map.put("list", list);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

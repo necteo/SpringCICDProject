@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sist.web.service.SeoulService;
-import com.sist.web.service.SeoulServiceImpl;
+import com.sist.web.vo.FoodVO;
 import com.sist.web.vo.SeoulVO;
 
 import lombok.RequiredArgsConstructor;
@@ -24,8 +24,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/seoul/")
 public class SeoulRestController {
-
-    private final SeoulServiceImpl seoulServiceImpl;
 	
 	private final SeoulService sService;
 	
@@ -76,9 +74,12 @@ public class SeoulRestController {
 			map.put("table_name", tables[type]);
 			map.put("no", no);
 			SeoulVO vo = sService.seoulDetailData(map);
+			String[] datas = vo.getAddress().split(" ");
+			List<FoodVO> list = sService.foodNearData4(datas[2]);
 			// => 주변 맛집
 			map = new HashMap<>();
 			map.put("vo", vo);
+			map.put("list", list);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

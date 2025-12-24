@@ -68,7 +68,7 @@
           <div class="breadcrumb__text">
             <h2>상세보기</h2>
             <div class="breadcrumb__option">
-              <span>서울</span>>
+              <span>부산</span>>
             </div>
           </div>
         </div>
@@ -76,7 +76,7 @@
     </div>
   </section>
   <!-- Breadcrumb Section End -->
-<div id="seoul_detail">
+<div id="busan_detail">
   <!-- Product Details Section Begin -->
   <section class="product-details spad">
     <div class="container">
@@ -84,13 +84,13 @@
         <div class="col-lg-6 col-md-6">
           <div class="product__details__pic">
             <div class="product__details__pic__item">
-              <img class="product__details__pic__item--large" :src="store.detail.vo.poster" style="width: 100%; height: 400px">
+              <img class="product__details__pic__item--large" :src="store.detail.vo.image1" style="width: 100%; height: 400px">
             </div>
           </div>
         </div>
         <div class="col-lg-6 col-md-6">
           <div class="product__details__text">
-            <h3>{{store.detail.vo.title}}</h3>
+            <h3>평점</h3>
             <div class="product__details__rating">
               <i class="fa fa-star"></i>
               <i class="fa fa-star"></i>
@@ -99,7 +99,7 @@
               <i class="fa fa-star-half-o"></i>
               <span>(18 reviews)</span>
             </div>
-            <p>{{store.detail.vo.msg}}</p>
+            <p>{{store.detail.vo.title}}</p>
             <ul>
               <li><b>주소</b> <span>{{store.detail.vo.address}}</span></li>
               <li><b>조회수</b> <span>{{store.detail.vo.hit}}</span></li>
@@ -159,17 +159,16 @@
   </section>
 </div>
   <!-- Related Product Section End -->
-  <script src="/seouljs/seoulStore.js"></script>
+  <script src="/busanjs/busanStore.js"></script>
   <script>
     const detailApp = Vue.createApp({
 	  setup() {
-		const store = useSeoulStore()
+		const store = useBusanStore()
 		const params = new URLSearchParams(location.search)
 		const no = params.get('no')
-		const type = params.get('type')
 		
 		Vue.onMounted(() => {
-		  store.seoulDetailData(no, type)
+		  store.busanDetailData(no)
 		})
 		
 		return {
@@ -178,7 +177,7 @@
 	  }
     })
     detailApp.use(Pinia.createPinia())
-    detailApp.mount('#seoul_detail')
+    detailApp.mount('#busan_detail')
   </script>
 </body>
 </html>
