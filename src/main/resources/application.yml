@@ -1,7 +1,7 @@
 #port = 8080 = aws : 8080허용 / 1521 / 3306
 #JSP / Security / Batch
-server:
-  port: 9090
+#server:
+#  port: 9090
 
 spring:
   mvc:

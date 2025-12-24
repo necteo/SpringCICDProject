@@ -26,4 +26,10 @@ public class SeoulServiceImpl implements SeoulService {
 		return mapper.seoulTotalPage(map);
 	}
 
+	@Override
+	public SeoulVO seoulDetailData(Map<String, Object> map) {
+		mapper.seoulHitIncrement(map);
+		return mapper.seoulDetailData(map);
+	}
+
 }

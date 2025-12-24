@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sist.web.service.SeoulService;
+import com.sist.web.service.SeoulServiceImpl;
 import com.sist.web.vo.SeoulVO;
 
 import lombok.RequiredArgsConstructor;
+
 // front 연동 => vue : pinia
 //					  => vue의 문법 => javascript
 // 1. java 2. oracle 3. jsp (mvc) 4. spring
@@ -22,6 +24,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/seoul/")
 public class SeoulRestController {
+
+    private final SeoulServiceImpl seoulServiceImpl;
 	
 	private final SeoulService sService;
 	
@@ -31,7 +35,7 @@ public class SeoulRestController {
 			"seoul_nature",
 			"seoul_shop"
 	};
-	
+
 	@GetMapping("list_vue")
 	// ResponseEntity => 비동기적으로 처리
 	public ResponseEntity<Map<String, Object>> seoul_list(
@@ -57,6 +61,24 @@ public class SeoulRestController {
 			map.put("startPage", startPage);
 			map.put("endPage", endPage);
 			map.put("type", type);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(map, HttpStatus.OK);
+	}
+	
+	@GetMapping("detail_vue")
+	public ResponseEntity<Map<String, Object>> seoul_detail(
+			@RequestParam("no") int no, @RequestParam("type") int type) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			map.put("table_name", tables[type]);
+			map.put("no", no);
+			SeoulVO vo = sService.seoulDetailData(map);
+			// => 주변 맛집
+			map = new HashMap<>();
+			map.put("vo", vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

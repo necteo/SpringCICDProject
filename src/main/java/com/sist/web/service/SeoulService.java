@@ -15,5 +15,6 @@ public interface SeoulService {
 	
 	public List<SeoulVO> seoulListData(Map<String, Object> map);
 	public int seoulTotalPage(Map<String, Object> map);
+	public SeoulVO seoulDetailData(Map<String, Object> map);
 
 }
