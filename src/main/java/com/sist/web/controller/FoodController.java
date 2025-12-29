@@ -1,4 +1,4 @@
-package com.sist.web.restcontroller;
+package com.sist.web.controller;
 
 import java.util.List;
 
@@ -51,6 +51,19 @@ public class FoodController {
 		FoodVO vo = fService.foodDetailData(fno);
 		model.addAttribute("vo", vo);
 		model.addAttribute("main_jsp", "../food/detail.jsp");
+		return "main/main";
+	}
+	
+	@GetMapping("find")
+	public String food_find(Model model) {
+		model.addAttribute("main_jsp", "../food/find.jsp");
+		return "main/main";
+	}
+	
+	// detail => pinia : 지도 / 댓글 => 로그인 처리
+	@GetMapping("detail_vue")
+	public String food_detail_vue(Model model) {
+		model.addAttribute("main_jsp", "../food/find_detail.jsp");
 		return "main/main";
 	}
 
