@@ -28,7 +28,7 @@ jobs:
         run: chmod +x ./gradlew
        
       - name: Build with Gradle
-        run: ./gradlew clean build
+        run: ./gradlew build
         # .jar파일 생성 => clean은 전체 삭제 => 다시 build
       - name: Log in to DockerHub
         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
@@ -56,6 +56,7 @@ jobs:
       - name: Deploy on server using DockerHub image
         run: |
           ssh ubuntu@13.220.65.35 << 'EOF'
+            # docker-compose.yml 파일이 존재
             cd /home/ubuntu/app
             docker compose pull
             docker compose down
