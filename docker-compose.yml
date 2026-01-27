@@ -1,0 +1,5 @@
+services:
+	app:
+		image: spring-cicd
+	ports:
+		- '9090:9090'
